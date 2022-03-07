@@ -28,7 +28,10 @@ app.use(
       resave: true,
       saveUninitialized: false,
       path:'/',
-      maxAge: 24*60*60*1000,
+      cookie:{
+        maxAge: 24*60*60*1000,
+      },
+      
       secure:false
     })
   );

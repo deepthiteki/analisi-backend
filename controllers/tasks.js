@@ -83,18 +83,18 @@ const graphit = async(req,res) => {
         const task = await tasks.find({CreatedBy:req.session.userid})
         console.log("userid",req.session.userid)
         // const user = await users.findById(userid);
-        console.log(new mongoose.Types.ObjectId(req.session.userid))
-        const data = await users.aggregate([{
+        console.log(mongoose.Types.ObjectId(req.session.userid))
+        const data = await tasks.aggregate([{
           $match:{
-            "createdBy":new mongoose.Types.ObjectId(req.session.userid)
-          }}
-          // {$group:{
-          //   _id: "$area",
-          //   fieldN:{"$sum":"$duration"}
-          // }
+            "createdBy":{$eq:mongoose.Types.ObjectId(req.session.userid)}
+          }},
+          {$group:{
+            _id: "$area",
+            fieldN:{"$sum":"$duration"}
+          }
 
 
-        ])
+          }])
         console.log(data)
         return res.send({
             status:0,
